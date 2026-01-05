@@ -5,20 +5,51 @@
     
 }
 
-.header {
-    width: 100%;
-    height: 100vh;
+/* Страница Хаба */
+.hubpage {
     background: linear-gradient(109deg, darkred, black);
+    width: 100%;
+    height: 110vh;
+    padding-top: 10vh;
+}
+.section {
+    padding-top: 20vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 3fr;
 }
 .hub.navline {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 10vh;
+
+    background: rgba(0, 0, 0, 0.1);
+    height: 10vh;
+    width: 100%;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+}
+.hublink {
+    
     display: flex;
     align-items: center;
-    padding: 5%;
-    padding-top: 2vh;
-    padding-bottom: 20vh;
+    justify-content:center;
+}
+.mainnav {
+    display: flex;
+    align-items: center;
+    justify-content:left;
 }
 .hub.homelogo.link {
-    width: 4%;
+    width: 60px;
+    height: 60px;
+    margin-right: 2%;
+
 }
 .hub.homelogo.image {
     border-radius: 50%;
@@ -30,16 +61,13 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 1.5em;
     font-weight: 100;
-    padding-left: 1%;
+    padding-right: 10%;
 }
 .hub.nav.element {
     color: white;
     font-weight: 100;
     font-size: 1.3em;
     padding-left: 5%;
-}
-.hub.nav.element.first {
-    padding-left: 11%;
 }
 .hub.descriptionline {
     display: grid;
@@ -77,4 +105,3 @@
     width: 100%;
     height: 100vh;
 }
-    
