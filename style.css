@@ -5,6 +5,10 @@
     
 }
 
+.background p {
+    opacity: 0;
+}
+
 /* Страница Хаба */
 .hubpage {
     background: linear-gradient(109deg, darkred, black);
@@ -14,6 +18,8 @@
 }
 .section {
     padding-top: 20vh;
+}
+.hub.section {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1fr 3fr;
@@ -23,7 +29,7 @@
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 10vh;
 
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     height: 10vh;
     width: 100%;
     border-bottom-left-radius: 25px;
@@ -79,6 +85,7 @@
     padding-bottom: 20vh;
 }
 .hub.maintext_title {
+    z-index: 10;
     font-size: 3em;
     padding-left: 25%;
     color: white;
@@ -86,6 +93,7 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .hub.description {
+    z-index: 10;
     font-size: 1em;
     padding-left: 25%;
     padding-right: 25%;
@@ -94,14 +102,96 @@
     font-weight: 80;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
+.hub.background {
+    background: linear-gradient(109deg,darkred, black);
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 120vh;
+    top: 0;
+}
 
 
 
 
 /* wiki styles */
-.wiki {
-    background: linear-gradient(109deg, darkblue, black);
+
+
+
+
+
+.wiki.background {
+    background: linear-gradient(109deg,darkblue, black);
+    position: fixed;
+    z-index: 1;
     width: 100%;
-    height: 100vh;
+    height: 120vh;
+    top: 0;
+    left: 0;
 }
+.wikipage {
+    width: 100%;
+    height: 110vh;
+    padding-top: 10vh;
+    color: white;
+    text-decoration: none;
+}
+.hub.nav.element.first.wiki { 
+    padding-left: 19%;
+}
+.wiki.aside {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 10fr;
+    position: fixed;
+    height: 80vh;
+    width: 20%;
+    z-index: 100;
+    background: rgb(1, 6, 62);
+    border-bottom-right-radius: 20px;
+}
+.wiki.sidenav.paragraph {
+    font-size: 1.7em;
+    padding-top: 10%;
+    padding-bottom: 5%;
+    padding-left: 10%
+}
+.wiki.aside li {
+    padding-left: 10%;
+    font-size: 1em;
+    padding-bottom: 2%;
+    font-style: italic;
+}
+.wiki.aside a {
+    color: white;
+}
+.wiki.section.one {
+    padding: 0;
+    display: grid;
+    gap: 0;
+    width: 68%;
+    height: 30vh;
+    grid-template-columns: 100%;
+    position: relative;
+    z-index: 2;
+    margin-left: 22%;
+    margin-top: 5vh;
+    margin-right: 10%;
+    background: rgb(6, 6, 63);
+    border-radius: 20px;
+    justify-content: center;
+}
+.wiki.section.one h1 {
+    padding-left: 25%;
+    font-size: 2.5em;
+}
+.wiki.section.one p {
+    padding-left: 10%;
+    font-size: 1em;
+}
+
+
+
+
+
+/* history styles */
