@@ -1,30 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiki</title>
+    <title>Wiki - Мастерия</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="wiki header">
-        <div class="hub navline">
-            <a href="index.html" class="hub homelogo link">
-                <img src="img/hubavatar.webp" alt="Hub Avatar"  class="hub homelogo image">
-            </a>
-            <a href="index.html" class="hub title">
-                <h1 class="hub title">Мастерия</h1>
-            </a>
-            <a class="wiki nav element first" href="history.html">История</a>
-             <a class="wiki nav element" href="wiki.html">Вики</a>
-            <a class="wiki nav element" href="membersdesk.html">Доска Почёта</a>
+<body class="wiki-body">
+
+    <nav class="navline wiki-nav">
+        <a href="index.html" class="hub homelogo link">
+            <img src="img/hubavatar.webp" alt="Avatar" class="hub homelogo image">
+        </a>
+        <a href="index.html" class="hub title">Мастерия</a>
+        
+        <div class="nav-links">
+            <a href="history.html" class="hub nav element">История</a>
+            <a href="wiki.html" class="hub nav element active">Вики</a>
+            <a href="membersdesk.html" class="hub nav element">Доска Почёта</a>
         </div>
-        <div class="wiki mainpart">
-            <div class="wiki side-bar">
-                На этой странице:
-            </div>
-            <div class="wiki main description">Бла-бла-бла</div>
-        </div>
+    </nav>
+
+    <div class="wiki-container">
+        
+        <aside class="wiki-sidebar">
+            <h3>Навигация</h3>
+            <ul>
+                <li><a href="#intro">Введение</a></li>
+                <li><a href="#rules">Правила</a></li>
+                <li><a href="#magic">Магия</a></li>
+                <li><a href="#clans">Кланы</a></li>
+            </ul>
+        </aside>
+
+        <main class="wiki-content">
+            <h1>Добро пожаловать в Вики</h1>
+            <p>Здесь находится основной текст статьи. Прокрутите вниз, чтобы проверить фиксацию меню.</p>
+            
+            <br><br><br> <h2>Раздел 1</h2>
+            <p>Много текста про историю сервера...</p>
+            <p>Бла-бла-бла...</p>
+            
+            <br><br><br>
+            <h2>Раздел 2</h2>
+            <p>Еще больше текста...</p>
+            <p>Бла-бла-бла...</p>
+            
+            <br><br><br><br><br><br><br><br><br><br>
+            <p>Конец страницы.</p>
+        </main>
+
     </div>
+
 </body>
 </html>
