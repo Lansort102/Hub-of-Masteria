@@ -33,6 +33,7 @@
     <button class="sidebar-toggle" aria-label="Открыть навигацию">☰</button>
     <div class="sidebar-overlay"></div>
     <aside class="wiki-sidebar">
+        <button class="sidebar-close" aria-label="Закрыть навигацию">×</button>
         <h2 class="wiki-sidebar-title">Навигация по странице:</h2>
         <ul>
             <li><a href="#maininform">- Общая Информация</a></li>
@@ -78,19 +79,26 @@
         const sidebarToggle = document.querySelector('.sidebar-toggle');
         const sidebar = document.querySelector('.wiki-sidebar');
         const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        const sidebarClose = document.querySelector('.sidebar-close');
+        
+        function closeSidebar() {
+            if (sidebar) sidebar.classList.remove('active');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        }
         
         if (sidebarToggle && sidebar) {
             sidebarToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
                 if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
             });
-            
-            if (sidebarOverlay) {
-                sidebarOverlay.addEventListener('click', () => {
-                    sidebar.classList.remove('active');
-                    sidebarOverlay.classList.remove('active');
-                });
-            }
+        }
+        
+        if (sidebarClose) {
+            sidebarClose.addEventListener('click', closeSidebar);
+        }
+        
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', closeSidebar);
         }
     </script>
 </body>

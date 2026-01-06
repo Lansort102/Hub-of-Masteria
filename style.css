@@ -258,6 +258,31 @@ a {
     border-bottom-right-radius: var(--border-radius);
 }
 
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 2em;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10002;
+    transition: background 0.3s ease, transform 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
 .wiki-sidebar-title {
     font-size: 1.7em;
     padding-top: 10%;
@@ -480,6 +505,10 @@ a {
     .wiki-sidebar.active,
     .history-sidebar.active {
         left: 0;
+    }
+    
+    .sidebar-close {
+        display: flex;
     }
     
     .sidebar-toggle {
