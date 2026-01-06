@@ -260,26 +260,27 @@ a {
 
 .sidebar-close {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 1rem;
     right: 1rem;
-    width: 35px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 50%;
     color: var(--color-white);
-    font-size: 2em;
+    font-size: 1.5em;
     line-height: 1;
     cursor: pointer;
     z-index: 10002;
     transition: background 0.3s ease, transform 0.3s ease;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-close:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.8);
     transform: rotate(90deg);
 }
 
@@ -508,6 +509,10 @@ a {
     }
     
     .sidebar-close {
+        display: none;
+    }
+    
+    .sidebar-close.active {
         display: flex;
     }
     
