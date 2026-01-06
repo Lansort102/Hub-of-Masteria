@@ -1,11 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>История - Мастерия</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="historypage">
+    <div class="page-background history-background"></div>
     
+    <nav class="navbar">
+        <div class="navbar-logo-section">
+            <a href="index.html" class="navbar-logo-link">
+                <img src="img/hubavatar.webp" alt="Логотип Мастерии" class="navbar-logo-image">
+            </a>
+            <a href="index.html" class="navbar-title">
+                <h1>Мастерия</h1>
+            </a>
+        </div>
+        <button class="navbar-toggle" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="navbar-main">
+            <a href="history.html" class="navbar-link navbar-link--first">История</a>
+            <a href="wiki.html" class="navbar-link">Вики</a>
+            <a href="membersdesk.html" class="navbar-link">Доска участников</a>
+        </div>
+    </nav>
+
+    <button class="sidebar-toggle" aria-label="Открыть навигацию">☰</button>
+    <div class="sidebar-overlay"></div>
+    <aside class="history-sidebar">
+        <h2 class="wiki-sidebar-title">Навигация по странице:</h2>
+        <ul>
+            <li><a href="#maininform">- Общая Информация</a></li>
+            <li><a href="#administration">- Администрация</a></li>
+        </ul>
+    </aside>
+    
+    <main style="margin-left: 22%; padding: 2rem; position: relative; z-index: 1;">
+        <section id="maininform">
+            <h1>Общая Информация</h1>
+            <p>История сообщества Мастерия будет добавлена здесь.</p>
+        </section>
+    </main>
+    
+    <script>
+        // Мобильное меню навбара
+        const navbarToggle = document.querySelector('.navbar-toggle');
+        const navbarMain = document.querySelector('.navbar-main');
+        
+        if (navbarToggle && navbarMain) {
+            navbarToggle.addEventListener('click', () => {
+                navbarToggle.classList.toggle('active');
+                navbarMain.classList.toggle('active');
+            });
+            
+            const navbarLinks = navbarMain.querySelectorAll('.navbar-link');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navbarToggle.classList.remove('active');
+                    navbarMain.classList.remove('active');
+                });
+            });
+        }
+        
+        // Сайдбар
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebar = document.querySelector('.history-sidebar');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        
+        if (sidebarToggle && sidebar) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
+            });
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+        }
+    </script>
 </body>
 </html>

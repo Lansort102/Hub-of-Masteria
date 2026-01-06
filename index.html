@@ -3,37 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masteria</title>
+    <title>Мастерия - Главная</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="hubpage">
-    <div class="hub background">
-        <p>0</p>
-    </div>
-    <nav class="hub navline"> <!--Навигация по всему сайту-->
-        <div class="hublink">
-            <a href="index.html" class="hub homelogo link">
-                <img src="img/hubavatar.webp" alt="Hub Avatar"  class="hub homelogo image">
+    <div class="page-background hub-background"></div>
+    
+    <nav class="navbar">
+        <div class="navbar-logo-section">
+            <a href="index.html" class="navbar-logo-link">
+                <img src="img/hubavatar.webp" alt="Логотип Мастерии" class="navbar-logo-image">
             </a>
-            <a href="index.html" class="hub title">
-                <h1 class="hub title">Мастерия</h1>
+            <a href="index.html" class="navbar-title">
+                <h1>Мастерия</h1>
             </a>
         </div>
-        <div class="mainnav">
-            <a class="hub nav element first">Ивенты</a>
-            <a class="hub nav element">Майнкрафт</a>
-            <a class="hub nav element" href="wiki.html">Вики</a>
-            <a class="hub nav element">Аниме-Рейтинг</a>
-            <a class="hub nav element">?????</a>
+        <button class="navbar-toggle" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="navbar-main">
+            <a href="#" class="navbar-link navbar-link--first">Ивенты</a>
+            <a href="#" class="navbar-link">Майнкрафт</a>
+            <a href="wiki.html" class="navbar-link">Вики</a>
+            <a href="#" class="navbar-link">Аниме-Рейтинг</a>
+            <a href="#" class="navbar-link">?????</a>
         </div>
-
     </nav>
 
-    <section class="hub section">
-        <div class="hub descriptionline">
-            <h2 class="hub maintext_title">Мастерия - сообщество народа!</h2>
-            <p class="hub description">Мастерия - крупный Discord-сервер с богатой, 4-ёх летней историей, отзывчивым и ламповым комьюнити, необычными ивентами с щедрыми призами и справедливой администрацией!</p>
+    <section class="hub-section hub-content">
+        <div class="hub-description">
+            <h2 class="hub-title">Мастерия - сообщество народа!</h2>
+            <p class="hub-description-text">
+                Мастерия - крупный Discord-сервер с богатой, 4-ёх летней историей, 
+                отзывчивым и ламповым комьюнити, необычными ивентами с щедрыми призами 
+                и справедливой администрацией!
+            </p>
         </div>
-    </section> 
+    </section>
+    
+    <script>
+        // Мобильное меню навбара
+        const navbarToggle = document.querySelector('.navbar-toggle');
+        const navbarMain = document.querySelector('.navbar-main');
+        
+        if (navbarToggle && navbarMain) {
+            navbarToggle.addEventListener('click', () => {
+                navbarToggle.classList.toggle('active');
+                navbarMain.classList.toggle('active');
+            });
+            
+            // Закрытие меню при клике на ссылку
+            const navbarLinks = navbarMain.querySelectorAll('.navbar-link');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navbarToggle.classList.remove('active');
+                    navbarMain.classList.remove('active');
+                });
+            });
+        }
+    </script>
 </body>
 </html>

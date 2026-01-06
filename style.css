@@ -1,197 +1,578 @@
+/* ============================================
+   CSS Variables для легкого управления
+   ============================================ */
+   :root {
+    --z-index-background: -1;
+    --z-index-content: 1;
+    --z-index-sidebar: 100;
+    --z-index-navbar: 9999;
+    
+    --height-navbar: 10vh;
+    --height-page: 110vh;
+    --height-background: 120vh;
+    
+    --spacing-section: 20vh;
+    --spacing-padding: 5%;
+    
+    --color-dark-red: darkred;
+    --color-dark-blue: darkblue;
+    --color-gold: rgb(246, 217, 0);
+    --color-white: white;
+    --color-black: black;
+    --color-wiki-bg: rgb(1, 6, 62);
+    --color-wiki-section: rgb(6, 6, 63);
+    
+    --font-family-main: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    --border-radius: 20px;
+    --border-radius-nav: 25px;
+}
+
+/* ============================================
+   Reset & Base Styles
+   ============================================ */
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-main);
+    overflow-x: hidden;
+}
+
+a {
     text-decoration: none;
-    
+    color: inherit;
 }
 
-.background p {
-    opacity: 0;
-}
-
-/* Страница Хаба */
-.hubpage {
-    background: linear-gradient(109deg, darkred, black);
-    width: 100%;
-    height: 110vh;
-    padding-top: 10vh;
-}
-.section {
-    padding-top: 20vh;
-}
-.hub.section {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 1fr 3fr;
-}
-.hub.navline {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 10vh;
-
-    background: rgba(0, 0, 0, 0.2);
-    height: 10vh;
-    width: 100%;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+/* ============================================
+   Common Background Pattern
+   ============================================ */
+.page-background {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9999;
+    width: 100%;
+    height: var(--height-background);
+    z-index: var(--z-index-background);
+}
 
+.hub-background {
+    background: linear-gradient(109deg, var(--color-dark-red), var(--color-black));
 }
-.hublink {
-    
+
+.wiki-background {
+    background: linear-gradient(109deg, var(--color-dark-blue), var(--color-black));
+}
+
+.history-background {
+    background: linear-gradient(109deg, var(--color-gold), var(--color-black));
+}
+
+/* ============================================
+   Navigation Bar (общий для всех страниц)
+   ============================================ */
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: var(--height-navbar);
+    background: rgba(0, 0, 0, 0.2);
+    height: var(--height-navbar);
+    width: 100%;
+    border-bottom-left-radius: var(--border-radius-nav);
+    border-bottom-right-radius: var(--border-radius-nav);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-index-navbar);
+}
+
+
+
+.navbar-logo-section {
     display: flex;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
 }
-.mainnav {
+
+.navbar-main {
     display: flex;
     align-items: center;
-    justify-content:left;
+    justify-content: flex-start;
 }
-.hub.homelogo.link {
+
+.navbar-logo-link {
     width: 60px;
     height: 60px;
     margin-right: 2%;
-
 }
-.hub.homelogo.image {
+
+.navbar-logo-image {
     border-radius: 50%;
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
-.hub.title {
-    color: white;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+.navbar-title {
+    color: var(--color-white);
     font-size: 1.5em;
     font-weight: 100;
     padding-right: 10%;
 }
-.hub.nav.element {
-    color: white;
+
+.navbar-title h1 {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.navbar-link {
+    color: var(--color-white);
     font-weight: 100;
     font-size: 1.3em;
     padding-left: 5%;
+    transition: opacity 0.3s ease;
 }
-.hub.descriptionline {
+
+.navbar-link:hover {
+    opacity: 0.7;
+}
+
+.navbar-link--first {
+    padding-left: 10%;
+}
+
+/* Мобильная кнопка меню (гамбургер) */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10000;
+}
+
+.navbar-toggle span {
+    width: 100%;
+    height: 3px;
+    background: var(--color-white);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.navbar-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Кнопка сайдбара (скрыта на десктопе) */
+.sidebar-toggle {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+
+/* ============================================
+   Hub Page (Главная страница)
+   ============================================ */
+.hubpage {
+    background: linear-gradient(109deg, var(--color-dark-red), var(--color-black));
+    width: 100%;
+    min-height: var(--height-page);
+    padding-top: var(--height-navbar);
+}
+
+.hub-section {
+    padding-top: var(--spacing-section);
+}
+
+.hub-content {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 3fr;
+}
+
+.hub-description {
     display: grid;
     align-items: center;
     grid-template-rows: 1fr 3fr;
     grid-template-columns: 100%;
-    padding: 5%;
+    padding: var(--spacing-padding);
     padding-top: 2vh;
     padding-bottom: 20vh;
 }
-.hub.maintext_title {
-    z-index: 10;
+
+.hub-title {
+    z-index: var(--z-index-content);
     font-size: 3em;
     padding-left: 25%;
-    color: white;
+    color: var(--color-white);
     font-weight: 90;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.hub.description {
-    z-index: 10;
+
+.hub-description-text {
+    z-index: var(--z-index-content);
     font-size: 1em;
     padding-left: 25%;
     padding-right: 25%;
     padding-top: 2vh;
-    color: white;
+    color: var(--color-white);
     font-weight: 80;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.hub.background {
-    background: linear-gradient(109deg,darkred, black);
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    height: 120vh;
-    top: 0;
 }
 
-
-
-
-/* wiki styles */
-
-
-
-
-
-.wiki.background {
-    background: linear-gradient(109deg,darkblue, black);
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    height: 120vh;
-    top: 0;
-    left: 0;
-}
+/* ============================================
+   Wiki Page
+   ============================================ */
 .wikipage {
     width: 100%;
-    height: 110vh;
-    padding-top: 10vh;
-    color: white;
-    text-decoration: none;
+    min-height: var(--height-page);
+    padding-top: var(--height-navbar);
+    color: var(--color-white);
 }
-.hub.nav.element.first.wiki { 
-    padding-left: 19%;
-}
-.wiki.aside {
+
+.wiki-sidebar {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1fr 10fr;
     position: fixed;
     height: 80vh;
     width: 20%;
-    z-index: 100;
-    background: rgb(1, 6, 62);
-    border-bottom-right-radius: 20px;
+    z-index: var(--z-index-sidebar);
+    background: var(--color-wiki-bg);
+    border-bottom-right-radius: var(--border-radius);
 }
-.wiki.sidenav.paragraph {
+
+.wiki-sidebar-title {
     font-size: 1.7em;
     padding-top: 10%;
     padding-bottom: 5%;
-    padding-left: 10%
+    padding-left: 10%;
 }
-.wiki.aside li {
+
+.wiki-sidebar ul {
+    list-style: none;
+}
+
+.wiki-sidebar li {
     padding-left: 10%;
     font-size: 1em;
     padding-bottom: 2%;
-    font-style: italic;
 }
-.wiki.aside a {
-    color: white;
+
+.wiki-sidebar a {
+    color: var(--color-white);
+    transition: opacity 0.3s ease;
 }
-.wiki.section.one {
+
+.wiki-sidebar a:hover {
+    opacity: 0.7;
+}
+
+.wiki-section {
     padding: 0;
     display: grid;
     gap: 0;
     width: 68%;
-    height: 30vh;
+    min-height: 30vh;
     grid-template-columns: 100%;
     position: relative;
-    z-index: 2;
+    z-index: var(--z-index-content);
     margin-left: 22%;
     margin-top: 5vh;
     margin-right: 10%;
-    background: rgb(6, 6, 63);
-    border-radius: 20px;
+    background: var(--color-wiki-section);
+    border-radius: var(--border-radius);
     justify-content: center;
+    padding: 2rem;
 }
-.wiki.section.one h1 {
-    padding-left: 25%;
+
+.wiki-section h1 {
+    padding-left: 0;
     font-size: 2.5em;
+    margin-bottom: 1rem;
 }
-.wiki.section.one p {
+
+.wiki-section p {
+    padding-left: 0;
+    font-size: 1em;
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   History Page
+   ============================================ */
+.historypage {
+    width: 100%;
+    min-height: var(--height-page);
+    padding-top: var(--height-navbar);
+    color: var(--color-white);
+}
+
+.history-sidebar {
+    color: var(--color-white);
+    margin-top: var(--height-navbar);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 10fr;
+    position: fixed;
+    height: 90vh;
+    width: 20%;
+    z-index: var(--z-index-sidebar);
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.history-sidebar ul {
+    list-style: none;
+}
+
+.history-sidebar li {
     padding-left: 10%;
     font-size: 1em;
+    padding-bottom: 2%;
 }
 
+.history-sidebar a {
+    color: var(--color-white);
+    transition: opacity 0.3s ease;
+}
 
+.history-sidebar a:hover {
+    opacity: 0.7;
+}
 
+/* ============================================
+   Responsive Design
+   ============================================ */
 
+/* Планшеты (до 1024px) */
+@media (max-width: 1024px) {
+    .hub-title {
+        font-size: 2.5em;
+        padding-left: 15%;
+    }
+    
+    .hub-description-text {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+    
+    .wiki-section {
+        width: 75%;
+        margin-left: 25%;
+    }
+}
 
-/* history styles */
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    /* Навбар */
+    .navbar {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto;
+        height: auto;
+        min-height: var(--height-navbar);
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar-logo-section {
+        justify-content: flex-start;
+    }
+    
+    .navbar-logo-link {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+    }
+    
+    .navbar-title {
+        font-size: 1.2em;
+        padding-right: 0;
+    }
+    
+    .navbar-toggle {
+        display: flex;
+    }
+    
+    .navbar-main {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 0;
+        border-bottom-left-radius: var(--border-radius-nav);
+        border-bottom-right-radius: var(--border-radius-nav);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .navbar-main.active {
+        display: flex;
+    }
+    
+    .navbar-link {
+        padding: 1rem 1.5rem;
+        padding-left: 1.5rem;
+        font-size: 1.1em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-link--first {
+        padding-left: 1.5rem;
+    }
+    
+    .navbar-link:last-child {
+        border-bottom: none;
+    }
+    
+    /* Главная страница */
+    .hub-title {
+        font-size: 2em;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    
+    .hub-description-text {
+        padding-left: 5%;
+        padding-right: 5%;
+        font-size: 0.9em;
+    }
+    
+    .hub-description {
+        padding: 2rem 1rem;
+        padding-bottom: 10vh;
+    }
+    
+    /* Сайдбары */
+    .wiki-sidebar,
+    .history-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        z-index: 10001;
+        transition: left 0.3s ease;
+        border-radius: 0;
+        margin-top: 0;
+        overflow-y: auto;
+    }
+    
+    .wiki-sidebar.active,
+    .history-sidebar.active {
+        left: 0;
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+        position: fixed;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.6);
+        border: none;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        color: var(--color-white);
+        font-size: 1.5em;
+        cursor: pointer;
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+    }
+    
+    .sidebar-toggle:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+    
+    /* Контент с сайдбаром */
+    .wiki-section {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        padding: 1.5rem;
+    }
+    
+    .wiki-section h1 {
+        font-size: 2em;
+    }
+    
+    .historypage main {
+        margin-left: 0;
+        padding: 1rem;
+    }
+}
+
+/* Маленькие мобильные (до 480px) */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+    
+    .navbar-logo-link {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .navbar-title {
+        font-size: 1em;
+    }
+    
+    .hub-title {
+        font-size: 1.5em;
+    }
+    
+    .hub-description-text {
+        font-size: 0.85em;
+    }
+    
+    .wiki-sidebar,
+    .history-sidebar {
+        width: 100%;
+    }
+    
+    .wiki-section {
+        padding: 1rem;
+    }
+    
+    .wiki-section h1 {
+        font-size: 1.5em;
+    }
+}
