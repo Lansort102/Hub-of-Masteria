@@ -43,26 +43,6 @@
         </div>
     </section>
     
-    <script>
-        // Мобильное меню навбара
-        const navbarToggle = document.querySelector('.navbar-toggle');
-        const navbarMain = document.querySelector('.navbar-main');
-        
-        if (navbarToggle && navbarMain) {
-            navbarToggle.addEventListener('click', () => {
-                navbarToggle.classList.toggle('active');
-                navbarMain.classList.toggle('active');
-            });
-            
-            // Закрытие меню при клике на ссылку
-            const navbarLinks = navbarMain.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    navbarToggle.classList.remove('active');
-                    navbarMain.classList.remove('active');
-                });
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

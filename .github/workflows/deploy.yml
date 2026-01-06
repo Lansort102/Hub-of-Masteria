@@ -1,0 +1,64 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_NAME: masteria-frontend
+  DOCKER_IMAGE_TAG: latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub (optional)
+        # Раскомментируйте если используете Docker Hub
+        # uses: docker/login-action@v3
+        # with:
+        #   username: ${{ secrets.DOCKER_USERNAME }}
+        #   password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} .
+          docker tag ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+      - name: Push to Docker Hub (optional)
+        # Раскомментируйте если используете Docker Hub
+        # run: |
+        #   docker push ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+        #   docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+      - name: Deploy to server
+        # Настройте SSH деплой для вашего сервера
+        # Раскомментируйте и настройте под ваш сервер
+        # uses: appleboy/ssh-action@v1.0.0
+        # with:
+        #   host: ${{ secrets.SERVER_HOST }}
+        #   username: ${{ secrets.SERVER_USER }}
+        #   key: ${{ secrets.SSH_PRIVATE_KEY }}
+        #   script: |
+        #     cd /path/to/your/project
+        #     docker-compose pull
+        #     docker-compose up -d
+        #     docker system prune -f
+        run: |
+          echo "Деплой на сервер. Настройте SSH деплой в секретах GitHub."
+          echo "Пример команды для деплоя:"
+          echo "docker-compose pull && docker-compose up -d"
+
+      - name: Cleanup
+        run: |
+          docker system prune -f
+

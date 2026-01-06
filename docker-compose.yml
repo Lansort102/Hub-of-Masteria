@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # Frontend (Nginx)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: masteria-frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    networks:
+      - masteria-network
+    # Раскомментируйте когда добавите бекенд
+    # depends_on:
+    #   - backend
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+
+  # Backend (заглушка для будущего бекенда)
+  # Раскомментируйте и настройте когда будете добавлять бекенд
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: masteria-backend
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./backend:/app
+  #   restart: unless-stopped
+  #   networks:
+  #     - masteria-network
+  #   environment:
+  #     - NODE_ENV=production
+  #     # Добавьте свои переменные окружения
+  #     # - DATABASE_URL=postgresql://user:pass@db:5432/masteria
+  #   # depends_on:
+  #   #   - db
+
+  # Database (заглушка для будущей БД)
+  # Раскомментируйте когда будете добавлять базу данных
+  # db:
+  #   image: postgres:15-alpine
+  #   container_name: masteria-db
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - masteria-network
+  #   environment:
+  #     - POSTGRES_DB=masteria
+  #     - POSTGRES_USER=masteria_user
+  #     - POSTGRES_PASSWORD=change_this_password
+  #   ports:
+  #     - "5432:5432"
+
+networks:
+  masteria-network:
+    driver: bridge
+
+# volumes:
+#   postgres_data:
+
