@@ -22,43 +22,51 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub (optional)
-        # Раскомментируйте если используете Docker Hub
-        # uses: docker/login-action@v3
-        # with:
-        #   username: ${{ secrets.DOCKER_USERNAME }}
-        #   password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker Hub
+        if: ${{ secrets.DOCKER_USERNAME != '' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
         run: |
           docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} .
           docker tag ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} ${{ env.DOCKER_IMAGE_NAME }}:latest
 
-      - name: Push to Docker Hub (optional)
-        # Раскомментируйте если используете Docker Hub
-        # run: |
-        #   docker push ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
-        #   docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
-
-      - name: Deploy to server
-        # Настройте SSH деплой для вашего сервера
-        # Раскомментируйте и настройте под ваш сервер
-        # uses: appleboy/ssh-action@v1.0.0
-        # with:
-        #   host: ${{ secrets.SERVER_HOST }}
-        #   username: ${{ secrets.SERVER_USER }}
-        #   key: ${{ secrets.SSH_PRIVATE_KEY }}
-        #   script: |
-        #     cd /path/to/your/project
-        #     docker-compose pull
-        #     docker-compose up -d
-        #     docker system prune -f
+      - name: Push to Docker Hub
+        if: ${{ secrets.DOCKER_USERNAME != '' }}
         run: |
-          echo "Деплой на сервер. Настройте SSH деплой в секретах GitHub."
-          echo "Пример команды для деплоя:"
-          echo "docker-compose pull && docker-compose up -d"
+          docker push ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+      - name: Deploy to server via SSH
+        if: ${{ secrets.SERVER_HOST != '' }}
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH || '/opt/masteria' }}
+            git pull origin main || git pull origin master
+            docker-compose pull || true
+            docker-compose up -d --build
+            docker system prune -f
+
+      - name: Deploy notification
+        if: always()
+        run: |
+          echo "Деплой завершен. Проверьте статус на сервере."
+          echo "Если деплой не настроен, настройте секреты:"
+          echo "- SERVER_HOST"
+          echo "- SERVER_USER"
+          echo "- SSH_PRIVATE_KEY"
+          echo "- DEPLOY_PATH (опционально)"
 
       - name: Cleanup
+        if: always()
         run: |
           docker system prune -f
 

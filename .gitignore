@@ -1,0 +1,92 @@
+# ============================================
+# Git Ignore для Hub of Masteria
+# ============================================
+
+# OS файлы
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Логи
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Зависимости
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Сборка
+dist/
+build/
+*.map
+.cache/
+.parcel-cache/
+.next/
+out/
+.nuxt/
+
+# Переменные окружения
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Docker
+.dockerignore уже настроен
+# Но можно добавить временные файлы
+docker-compose.override.yml
+
+# Временные файлы
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# Тестирование
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+
+# Документация (если генерируется)
+docs/_build/
+site/
+
+# Локальные настройки
+local/
+.local/
+

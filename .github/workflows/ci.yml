@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  lint:
+    name: Lint and Validate
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate HTML
+        run: |
+          echo "HTML валидация (можно добавить html-validator)"
+          find . -name "*.html" -type f | head -5
+
+      - name: Validate CSS
+        run: |
+          echo "CSS валидация (можно добавить stylelint)"
+          find . -name "*.css" -type f
+
+      - name: Validate JavaScript
+        run: |
+          echo "JavaScript валидация (можно добавить ESLint)"
+          find . -name "*.js" -type f
+
+  docker-build:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t masteria-frontend:test .
+          docker images | grep masteria-frontend
+
+      - name: Test Docker image
+        run: |
+          docker run -d -p 8080:80 --name test-container masteria-frontend:test
+          sleep 5
+          curl -f http://localhost:8080 || exit 1
+          docker stop test-container
+          docker rm test-container
+

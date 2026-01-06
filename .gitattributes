@@ -1,0 +1,50 @@
+# ============================================
+# Git Attributes для Hub of Masteria
+# ============================================
+
+# Автоматически определять текстовые файлы и нормализовать концы строк
+* text=auto
+
+# Явно объявить текстовые файлы, которые вы хотите всегда нормализовать
+*.html text
+*.css text
+*.js text
+*.json text
+*.md text
+*.yml text
+*.yaml text
+*.txt text
+*.conf text
+*.sh text
+
+# Объявить файлы, которые всегда будут иметь CRLF концы строк
+*.bat text eol=crlf
+
+# Объявить файлы, которые всегда будут иметь LF концы строк
+*.sh text eol=lf
+
+# Бинарные файлы
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+
+# Docker файлы
+Dockerfile text
+docker-compose.yml text
+.dockerignore text
+
+# Git файлы
+.gitignore text
+.gitattributes text
+
