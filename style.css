@@ -145,15 +145,26 @@ a {
 }
 
 .navbar-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 2%;
-    gap: 1rem;
-    position: absolute;
-    top: 50%;
-    right: 2%;
-    transform: translateY(-50%);
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 2%;
+        gap: 1rem;
+        position: absolute;
+        top: 0;
+        right: 2%;
+        height: 100%;
+        width: auto;
+    }
+    
+    .navbar-right .navbar-toggle {
+        display: none !important;
+    }
 }
 
 .navbar-login-btn {
@@ -187,6 +198,7 @@ a {
     cursor: pointer;
     padding: 0;
     z-index: 10000;
+    position: relative;
 }
 
 .navbar-toggle span {
@@ -462,10 +474,13 @@ a {
     }
     
     .navbar-right {
+        display: flex;
         position: static;
         transform: none;
         padding-right: 0;
         gap: 0.75rem;
+        height: auto;
+        width: auto;
     }
     
     .navbar-login-btn {
