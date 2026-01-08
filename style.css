@@ -144,6 +144,37 @@ a {
     padding-left: 10%;
 }
 
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 2%;
+    gap: 1rem;
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
+}
+
+.navbar-login-btn {
+    color: var(--color-white);
+    font-weight: 100;
+    font-size: 1.3em;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.navbar-login-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+}
+
 /* Мобильная кнопка меню (гамбургер) */
 .navbar-toggle {
     display: none;
@@ -352,17 +383,15 @@ a {
 
 .history-sidebar {
     color: var(--color-white);
-    margin-top: var(--height-navbar);
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1fr 10fr;
     position: fixed;
-    height: 90vh;
+    height: 80vh;
     width: 20%;
     z-index: var(--z-index-sidebar);
     background: rgba(0, 0, 0, 0.3);
     border-bottom-right-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
 }
 
 .history-sidebar ul {
@@ -430,6 +459,19 @@ a {
     .navbar-title {
         font-size: 1.2em;
         padding-right: 0;
+    }
+    
+    .navbar-right {
+        position: static;
+        transform: none;
+        padding-right: 0;
+        gap: 0.75rem;
+    }
+    
+    .navbar-login-btn {
+        font-size: 1em;
+        padding: 0.4rem 1rem;
+        border-radius: 15px;
     }
     
     .navbar-toggle {
