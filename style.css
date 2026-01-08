@@ -263,7 +263,7 @@ a {
 
 .hub-title {
     z-index: var(--z-index-content);
-    font-size: 3em;
+    font-size: 3.3em;
     padding-left: 25%;
     color: var(--color-white);
     font-weight: 90;
@@ -271,10 +271,10 @@ a {
 
 .hub-description-text {
     z-index: var(--z-index-content);
-    font-size: 1em;
-    padding-left: 25%;
+    font-size: 1.2em;
+    padding-left: 26%;
     padding-right: 25%;
-    padding-top: 2vh;
+    padding-top: 3vh;
     color: var(--color-white);
     font-weight: 80;
 }
