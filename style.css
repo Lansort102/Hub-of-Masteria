@@ -78,6 +78,8 @@ a {
     grid-template-columns: 1fr 3fr;
     grid-template-rows: var(--height-navbar);
     background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     height: var(--height-navbar);
     width: 100%;
     border-bottom-left-radius: var(--border-radius-nav);
