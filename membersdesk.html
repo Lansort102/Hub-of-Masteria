@@ -1,11 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Доска участников - Мастерия</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="hubpage">
+    <div class="page-background hub-background"></div>
     
+    <nav class="navbar">
+        <div class="navbar-logo-section">
+            <a href="index.html" class="navbar-logo-link">
+                <img src="img/hubavatar.webp" alt="Логотип Мастерии" class="navbar-logo-image">
+            </a>
+            <a href="index.html" class="navbar-title">
+                <h1>Мастерия</h1>
+            </a>
+        </div>
+        <div class="navbar-right">
+            <button class="navbar-toggle" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="#" class="navbar-login-btn">Войти</a>
+        </div>
+        <div class="navbar-main">
+            <a href="history.html" class="navbar-link navbar-link--first">История</a>
+            <a href="wiki.html" class="navbar-link">Вики</a>
+            <a href="membersdesk.html" class="navbar-link">Доска участников</a>
+        </div>
+    </nav>
+
+    <section class="hub-section hub-content">
+        <div class="hub-description">
+            <h2 class="hub-title">Доска участников</h2>
+            <div id="members-content">
+                <p>Загрузка данных...</p>
+            </div>
+        </div>
+    </section>
+    
+    <script src="script.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Защита страницы: требуется авторизация
+        document.addEventListener('DOMContentLoaded', async () => {
+            const isAuthenticated = await Auth.requireAuth();
+            if (isAuthenticated) {
+                const user = Auth.getUser();
+                const contentDiv = document.getElementById('members-content');
+                if (contentDiv) {
+                    contentDiv.innerHTML = `
+                        <p>Добро пожаловать, <strong>${user.username}</strong>!</p>
+                        <p>Здесь будет отображаться информация об участниках сообщества.</p>
+                    `;
+                }
+            }
+        });
+    </script>
 </body>
 </html>

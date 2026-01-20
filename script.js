@@ -83,5 +83,16 @@ function initSidebar() {
 document.addEventListener('DOMContentLoaded', () => {
     initNavbar();
     initSidebar();
+    
+    // Обновление навбара после инициализации авторизации (если auth.js загружен)
+    // auth.js сам обновит навбар, но делаем это здесь для совместимости
+    if (typeof Auth !== 'undefined') {
+        // Небольшая задержка, чтобы auth.js успел инициализироваться
+        setTimeout(() => {
+            if (Auth && typeof Auth.updateNavbar === 'function') {
+                Auth.updateNavbar();
+            }
+        }, 100);
+    }
 });
 
