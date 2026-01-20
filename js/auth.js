@@ -110,29 +110,42 @@ const Auth = {
 
   // Инициализация: проверка токена из URL и загрузка пользователя
   async init() {
-    // Проверяем, есть ли токен в URL параметрах (после редиректа от Discord)
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    const error = urlParams.get('error');
-
-    if (error) {
-      console.error('Auth error:', error);
-      alert('Ошибка авторизации. Попробуйте еще раз.');
-      // Удаляем параметр ошибки из URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      return;
+    // Показываем индикатор загрузки
+    const loginBtn = document.querySelector('.navbar-login-btn');
+    if (loginBtn) {
+      loginBtn.classList.add('navbar-login-btn--loading');
     }
 
-    if (token) {
-      // Сохраняем токен
-      this.setToken(token);
-      // Удаляем токен из URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      // Загружаем данные пользователя
-      await this.getCurrentUser();
-    } else if (this.isAuthenticated()) {
-      // Если токен уже есть, проверяем его валидность
-      await this.getCurrentUser();
+    try {
+      // Проверяем, есть ли токен в URL параметрах (после редиректа от Discord)
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const error = urlParams.get('error');
+
+      if (error) {
+        console.error('Auth error:', error);
+        alert('Ошибка авторизации. Попробуйте еще раз.');
+        // Удаляем параметр ошибки из URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+
+      if (token) {
+        // Сохраняем токен
+        this.setToken(token);
+        // Удаляем токен из URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // Загружаем данные пользователя
+        await this.getCurrentUser();
+      } else if (this.isAuthenticated()) {
+        // Если токен уже есть, проверяем его валидность
+        await this.getCurrentUser();
+      }
+    } finally {
+      // Убираем индикатор загрузки
+      if (loginBtn) {
+        loginBtn.classList.remove('navbar-login-btn--loading');
+      }
     }
   },
 
@@ -143,26 +156,135 @@ const Auth = {
 
     const user = this.getUser();
     
+    // Удаляем старые обработчики и меню
+    this.closeUserMenu();
+    loginBtn.classList.remove('navbar-login-btn--loading');
+    
     if (user) {
       // Пользователь авторизован
-      loginBtn.textContent = user.username || 'Профиль';
-      loginBtn.href = '#';
+      loginBtn.classList.add('navbar-login-btn--authenticated');
+      
+      // Очищаем содержимое кнопки
+      loginBtn.innerHTML = '';
+      
+      // Добавляем аватар
+      const avatar = document.createElement('img');
+      avatar.src = user.avatar_url || `https://cdn.discordapp.com/avatars/${user.discord_id}/${user.avatar}.png?size=32` || '/img/hubavatar.webp';
+      avatar.alt = user.username || 'Профиль';
+      avatar.className = 'user-avatar';
+      avatar.onerror = function() {
+        this.src = '/img/hubavatar.webp';
+      };
+      
+      // Добавляем имя пользователя
+      const userName = document.createElement('span');
+      userName.className = 'user-name';
+      userName.textContent = user.username || 'Профиль';
+      
+      loginBtn.appendChild(avatar);
+      loginBtn.appendChild(userName);
+      
+      // Создаем контейнер для меню (если его еще нет)
+      let menuContainer = loginBtn.parentElement;
+      if (!menuContainer.classList.contains('user-menu-container')) {
+        const newContainer = document.createElement('div');
+        newContainer.className = 'user-menu-container';
+        menuContainer.parentElement.insertBefore(newContainer, menuContainer);
+        newContainer.appendChild(loginBtn);
+        menuContainer = newContainer;
+      }
+      
+      // Создаем выпадающее меню (если его еще нет)
+      let userMenu = menuContainer.querySelector('.user-menu');
+      if (!userMenu) {
+        userMenu = document.createElement('div');
+        userMenu.className = 'user-menu';
+        
+        // Пункт "Профиль"
+        const profileItem = document.createElement('a');
+        profileItem.href = '#';
+        profileItem.className = 'user-menu-item';
+        profileItem.textContent = 'Профиль';
+        profileItem.onclick = (e) => {
+          e.preventDefault();
+          this.closeUserMenu();
+          // TODO: Редирект на страницу профиля, когда она будет создана
+        };
+        userMenu.appendChild(profileItem);
+        
+        // Разделитель
+        const divider = document.createElement('hr');
+        divider.className = 'user-menu-divider';
+        userMenu.appendChild(divider);
+        
+        // Пункт "Выйти"
+        const logoutItem = document.createElement('button');
+        logoutItem.className = 'user-menu-item user-menu-item--danger';
+        logoutItem.textContent = 'Выйти';
+        logoutItem.onclick = (e) => {
+          e.preventDefault();
+          this.closeUserMenu();
+          this.logout();
+        };
+        userMenu.appendChild(logoutItem);
+        
+        menuContainer.appendChild(userMenu);
+      }
+      
+      // Обработчик клика по кнопке для открытия/закрытия меню
       loginBtn.onclick = (e) => {
         e.preventDefault();
-        // Можно добавить меню профиля или редирект на страницу профиля
-        if (confirm('Вы хотите выйти?')) {
-          this.logout();
+        e.stopPropagation();
+        const isMenuOpen = userMenu.classList.contains('active');
+        this.closeAllUserMenus();
+        if (!isMenuOpen) {
+          userMenu.classList.add('active');
         }
       };
+      
+      // Закрытие меню при клике вне его
+      if (!this.menuClickListener) {
+        this.menuClickListener = (e) => {
+          if (!menuContainer.contains(e.target)) {
+            this.closeAllUserMenus();
+          }
+        };
+        document.addEventListener('click', this.menuClickListener);
+      }
     } else {
       // Пользователь не авторизован
-      loginBtn.textContent = 'Войти';
-      loginBtn.href = '#';
+      loginBtn.classList.remove('navbar-login-btn--authenticated');
+      loginBtn.innerHTML = 'Войти';
       loginBtn.onclick = (e) => {
         e.preventDefault();
         this.login();
       };
+      
+      // Удаляем контейнер меню, если он есть
+      const menuContainer = loginBtn.parentElement;
+      if (menuContainer && menuContainer.classList.contains('user-menu-container')) {
+        const parent = menuContainer.parentElement;
+        // Перемещаем кнопку обратно в родительский элемент
+        parent.insertBefore(loginBtn, menuContainer);
+        // Удаляем контейнер меню
+        menuContainer.remove();
+      }
     }
+  },
+
+  // Закрыть выпадающее меню пользователя
+  closeUserMenu(menuElement) {
+    if (menuElement) {
+      menuElement.classList.remove('active');
+    } else {
+      this.closeAllUserMenus();
+    }
+  },
+
+  // Закрыть все выпадающие меню пользователя
+  closeAllUserMenus() {
+    const allMenus = document.querySelectorAll('.user-menu');
+    allMenus.forEach(menu => menu.classList.remove('active'));
   },
 
   // Проверить авторизацию для защищенных страниц

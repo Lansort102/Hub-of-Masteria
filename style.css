@@ -178,12 +178,156 @@ a {
     transition: all 0.3s ease;
     cursor: pointer;
     white-space: nowrap;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
 }
 
 .navbar-login-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.5);
     opacity: 1;
+}
+
+/* Авторизованное состояние кнопки */
+.navbar-login-btn--authenticated {
+    padding: 0.4rem 1rem;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-login-btn--authenticated:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Аватар пользователя */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.navbar-login-btn--authenticated:hover .user-avatar {
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
+}
+
+/* Имя пользователя в кнопке */
+.user-name {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Выпадающее меню профиля */
+.user-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.user-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-menu-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    color: var(--color-white);
+    font-size: 1em;
+    font-weight: 100;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+}
+
+.user-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.user-menu-item--danger {
+    color: #ff6b6b;
+}
+
+.user-menu-item--danger:hover {
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.user-menu-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0.5rem 0;
+    border: none;
+}
+
+/* Индикатор загрузки */
+.navbar-login-btn--loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.navbar-login-btn--loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--color-white);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Анимация появления кнопки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar-login-btn--authenticated,
+.navbar-login-btn:not(.navbar-login-btn--authenticated) {
+    animation: fadeIn 0.4s ease;
 }
 
 /* Мобильная кнопка меню (гамбургер) */
@@ -487,6 +631,25 @@ a {
         font-size: 1em;
         padding: 0.4rem 1rem;
         border-radius: 15px;
+    }
+    
+    .navbar-login-btn--authenticated {
+        padding: 0.35rem 0.75rem;
+    }
+    
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .user-name {
+        max-width: 100px;
+    }
+    
+    .user-menu {
+        min-width: 180px;
+        right: 0;
+        left: auto;
     }
     
     .navbar-toggle {
