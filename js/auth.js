@@ -61,7 +61,7 @@ const Auth = {
       window.location.href = authUrl;
     } catch (error) {
       console.error('Error initiating login:', error);
-      alert('Ошибка при попытке авторизации. Попробуйте позже.');
+      Notification.error('Ошибка при попытке авторизации. Попробуйте позже.');
     }
   },
 
@@ -124,7 +124,7 @@ const Auth = {
 
       if (error) {
         console.error('Auth error:', error);
-        alert('Ошибка авторизации. Попробуйте еще раз.');
+        Notification.error('Ошибка авторизации. Попробуйте еще раз.');
         // Удаляем параметр ошибки из URL
         window.history.replaceState({}, document.title, window.location.pathname);
         return;
